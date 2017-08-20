@@ -1,0 +1,23 @@
+{% extends 'sr/base.html' %}
+
+{% block content %}
+<div class="container">
+    <h1>Contact Us</h1>
+    <form method="post">
+        {% csrf_token %}
+        <table>
+        {{ form.as_table }}
+        </table>
+        <div class="form-actions">
+            <button type="submit">Send</button>
+        </div>
+    </form>
+    {% if success == True %}
+    <br>
+    Thank you for your feedback!
+    {% elif success == False %}
+    <br>
+    <font color="red">There was an error submitting your feedback. Did you input a valid e-mai address?</font>
+    {% endif %}
+</div>
+{% endblock %}
