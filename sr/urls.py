@@ -12,4 +12,5 @@ urlpatterns = [
     url(r'^why-edumate/$', views.why_edumate, name='why-edumate'),
     url(r'^contact/$', views.contact, name='contact'),
     url(r'^contact-success/$', views.contact_success, name='contact-success'),
+    url(r'^browse-decks/$', views.browse_decks, name='browse-decks'),
 ]

@@ -30,46 +30,41 @@
     </table>
 
     <table class="table table-striped">
-    <thead>
-      <tr>
-        <th>Firstname</th>
-        <th>Lastname</th>
-        <th>Email</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td>John</td>
-        <td>Doe</td>
-        <td>john@example.com</td>
-      </tr>
-      <tr>
-        <td>Mary</td>
-        <td>Moe</td>
-        <td>mary@example.com</td>
-      </tr>
-      <tr>
-        <td>July</td>
-        <td>Dooley</td>
-        <td>july@example.com</td>
-      </tr>
-    </tbody>
-  </table>
+        <thead>
+            <tr>
+                <th>Firstname</th>
+                <th>Lastname</th>
+                <th>Email</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>John</td>
+                <td>Doe</td>
+                <td>john@example.com</td>
+            </tr>
+            <tr>
+                <td>Mary</td>
+                <td>Moe</td>
+                <td>mary@example.com</td>
+            </tr>
+            <tr>
+                <td>July</td>
+                <td>Dooley</td>
+                <td>july@example.com</td>
+            </tr>
+        </tbody>
+    </table>
     {% else %}
-    You don't have any decks yet! Go ahead and add some.
+    You don't have any decks yet! Go ahead and <a href="{% url 'sr:browse-decks' %}">add some.</a>
     {% endif %}
     <br>
 </div>
+{% endif %}
+
 
 <div class="container">
 <h1>Deck search</h1>
 <p><a href="/sr/add">Click here</a> to browse and add decks.</p>
-    </div>
-<!--
-Authentication now handled in view.
-{% else %}
-<p>Welcome! <a href="./login">Log in</a>, or <a href="./register">sign up</a> for an account.</p>
--->
-{% endif %}
-
+</div>
 {% endblock %}
