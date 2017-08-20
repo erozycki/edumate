@@ -113,3 +113,5 @@ media
 
 # settings
 secrets.py
+
+*.pem
