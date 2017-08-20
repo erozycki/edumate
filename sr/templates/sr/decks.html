@@ -32,17 +32,21 @@
     <table class="table table-striped">
         <thead>
             <tr>
-                <th>Firstname</th>
-                <th>Lastname</th>
-                <th>Email</th>
+                <th>Deck</th>
+                <th>Cards due</th>
+                <th>Reviews completed</th>
+                <th>Deck details</th>
             </tr>
         </thead>
         <tbody>
+            {% for instance in instance_list %}
             <tr>
-                <td>John</td>
+                <td>{{ instance.deck.name }}</td>
                 <td>Doe</td>
-                <td>john@example.com</td>
+                <td>{{ instance.reviews_done }}</td>
+                <td></td>
             </tr>
+            {% endfor %}
             <tr>
                 <td>Mary</td>
                 <td>Moe</td>
