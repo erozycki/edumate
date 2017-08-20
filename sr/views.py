@@ -57,3 +57,6 @@ def contact_success(request):
 
 def browse_decks(request):
     return render(request, 'sr/browse-decks.html')
+
+def getting_started(request):
+    return render(request, 'sr/getting-started.html')
