@@ -52,11 +52,13 @@ class DeckInstance(models.Model):
     deck = models.ForeignKey(Deck, db_index=True)
     user = models.ForeignKey(User, db_index=True)
     when_created = models.DateTimeField(auto_now_add=True)
-    scheduler = models.ForeignKey(Scheduler)
+    scheduler = models.ForeignKey(Scheduler, null=True)
     card_relations_set = models.ForeignKey(CardRelationsSet, blank=True, null=True)
-    reviews_done = models.IntegerField()
+    reviews_done = models.IntegerField(default=0)
     def __str__(self):
         return self.deck.name + "; " + self.user.username
+    class Meta:
+        unique_together = ("deck", "user")
 
 class ScheduledReview(models.Model):
     card = models.ForeignKey(Card, db_index=True)

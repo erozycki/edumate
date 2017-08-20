@@ -7,6 +7,7 @@ from django.urls import reverse
 from django.contrib.auth import login, authenticate
 from django.contrib.auth.forms import UserCreationForm
 from forms import ContactForm
+from django.db import IntegrityError
 import datetime
 import models
 
@@ -58,7 +59,7 @@ def contact_success(request):
 
 def browse_decks(request):
     if (request.user.is_authenticated()):
-        added = {di.deck for di in models.DeckInstance.objects.filter(user=request.user))
+        added = {di.deck for di in models.DeckInstance.objects.filter(user=request.user)}
     not_added = {d for d in models.Deck.objects.all() if d not in added}
     return render(request, 'sr/browse-decks.html', {'added': added, 'not_added': not_added})
 #        return render(request, 'sr/decks.html', {'instance_list': instance_list, 'count_list': count_list})
@@ -68,6 +69,21 @@ def browse_decks(request):
 #def browse_decks(request):
 #
 #    return render(request, 'sr/browse-decks.html')
+
+def add_deck(request, deck_name):
+    decks = models.Deck.objects.filter(name=deck_name)
+    if not decks:
+        raise Http404("No deck with name \"" + deck_name + "\" exists.")
+    if (request.user.is_authenticated()):
+        di = models.DeckInstance(deck=decks[0], user=request.user, scheduler=None)
+        # if user attempts to add duplicate deck instance, update nothing
+        try:
+            di.save()
+        except IntegrityError:
+            pass
+        return HttpResponseRedirect(reverse('sr:decks'))
+    else:
+        return HttpResponseRedirect(reverse('sr:login'))
 
 def getting_started(request):
     return render(request, 'sr/getting-started.html')
