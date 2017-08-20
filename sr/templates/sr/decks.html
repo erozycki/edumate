@@ -7,32 +7,10 @@
 <div class="container">
     <h1>Your decks</h1>
     {% if instance_list %}
-    <ul>
-        {% for instance in instance_list %}
-        <li><a href="/sr/review/{{ instance.deck.name }}/">{{ instance.deck.name }}</a></li>
-        {% endfor %}
-    </ul>
-    <table style="width:100%">
-        <tr>
-            <th>Deck</th>
-            <th>Cards due</th>
-            <th>Reviews completed</th>
-            <th>Deck details</th>
-        </tr>
-        {% for instance in instance_list %}
-        <tr>
-            <td>{{ instance.deck.name }}</td>
-            <td>Cards due</td>
-            <td>Reviews completed</td>
-            <td>Deck details</td>
-        </tr>
-        {% endfor %}
-    </table>
-
-    <table class="table table-striped">
+    <table class="table table-striped" style="width:70%">
         <thead>
             <tr>
-                <th>Deck</th>
+                <th>Deck name</th>
                 <th>Cards due</th>
                 <th>Reviews completed</th>
                 <th>Deck details</th>
@@ -42,33 +20,23 @@
             {% for instance in instance_list %}
             <tr>
                 <td>{{ instance.deck.name }}</td>
-                <td>Doe</td>
+                <td>{{ count_list.instance }}</td>
                 <td>{{ instance.reviews_done }}</td>
-                <td></td>
+                <td><a href="{% url 'sr:deck-details' deck_name=instance.deck.name %}">Details</a></td>
             </tr>
             {% endfor %}
-            <tr>
-                <td>Mary</td>
-                <td>Moe</td>
-                <td>mary@example.com</td>
-            </tr>
-            <tr>
-                <td>July</td>
-                <td>Dooley</td>
-                <td>july@example.com</td>
-            </tr>
         </tbody>
     </table>
     {% else %}
     You don't have any decks yet! Go ahead and <a href="{% url 'sr:browse-decks' %}">add some.</a>
     {% endif %}
-    <br>
 </div>
+<br>
 {% endif %}
 
-
 <div class="container">
-<h1>Deck search</h1>
-<p><a href="{% url 'sr:browse-decks' %}">Click here</a> to browse and add decks.</p>
+    <h1>Deck search</h1>
+    <p><a href="{% url 'sr:browse-decks' %}">Click here</a> to browse and add decks.</p>
 </div>
+
 {% endblock %}

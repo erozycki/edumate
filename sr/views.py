@@ -7,7 +7,7 @@ from django.urls import reverse
 from django.contrib.auth import login, authenticate
 from django.contrib.auth.forms import UserCreationForm
 from forms import ContactForm
-
+import datetime
 import models
 
 def index(request):
@@ -17,7 +17,8 @@ def index(request):
 def decks(request):
     if (request.user.is_authenticated()):
         instance_list = models.DeckInstance.objects.filter(user=request.user)
-        return render(request, 'sr/decks.html', {'instance_list': instance_list})
+        count_list = {x: len(models.ScheduledReview.objects.filter(deck_instance=x).filter(when_due__gt=datetime.datetime.now())) for x in instance_list}
+        return render(request, 'sr/decks.html', {'instance_list': instance_list, 'count_list': count_list})
     else:
         return HttpResponseRedirect(reverse('sr:login'))
 
