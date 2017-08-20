@@ -112,6 +112,6 @@ db.sqlite3
 media
 
 # settings
-secrets.py
+Project/secrets.py
 
 *.pem
