@@ -2,7 +2,7 @@
 from __future__ import unicode_literals
 
 from django.shortcuts import render, redirect
-from django.http import HttpResponse, HttpResponseRedirect, Http404
+from django.http import HttpResponse, HttpResponseRedirect
 from django.urls import reverse
 from django.contrib.auth import login, authenticate
 from django.contrib.auth.forms import UserCreationForm
@@ -61,18 +61,10 @@ def browse_decks(request):
 def getting_started(request):
     return render(request, 'sr/getting-started.html')
 
-def deck_details(request, deck_name):
-    matches = models.Deck.objects.filter(name=deck_name)
-    if not matches:
-        raise Http404("No deck with name \"" + deck_name + "\" exists.")
-    return render(request, 'sr/deck-details.html', {'deck': matches[0]})
-
 from django.contrib.staticfiles.views import serve
 def ssl_validation(request):
 #    return serve(request, '/opt/bitnami/apps/django/django_projects/Project/C06F6C31FEB8E0E0454C35722593BC00.txt', '/')
 #    return serve(request, 'C06F6C31FEB8E0E0454C35722593BC00.txt')
-    test_file = open('/opt/bitnami/apps/django/django_projects/Project/C06F6C31FEB8E0E0454C35722593BC00.txt', 'rb')
+    test_file = open('/opt/bitnami/apps/django/django_projects/Project/C06F6C31FEB8E0E0454C35722593BC00.txt')
     response = HttpResponse(content=test_file)
-    response['Content-Type'] = 'application/txt'
     response['Content-Disposition'] = 'attachment; filename="C06F6C31FEB8E0E0454C35722593BC00.txt"', 
-    return response

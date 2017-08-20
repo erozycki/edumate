@@ -6,7 +6,8 @@ from django.contrib.auth.models import User
 # Create your models here.
 
 class Deck(models.Model):
-    name = models.CharField(max_length=100, default="Orphaned", db_index=True)
+    name = models.CharField(max_length=100, default="Orphaned", db_index=True, unique=True)
+    description = models.TextField(default="")
     last_added_to = models.DateTimeField(auto_now_add=True)
     last_modified_content = models.DateTimeField(auto_now_add=True)
     def __str__(self):
@@ -53,6 +54,7 @@ class DeckInstance(models.Model):
     when_created = models.DateTimeField(auto_now_add=True)
     scheduler = models.ForeignKey(Scheduler)
     card_relations_set = models.ForeignKey(CardRelationsSet, blank=True, null=True)
+    reviews_done = models.IntegerField()
     def __str__(self):
         return self.deck.name + "; " + self.user.username
 
@@ -86,5 +88,6 @@ class ContactForm(models.Model):
     email = models.EmailField()
     subject = models.TextField()
     message = models.TextField()
+    datetime = models.DateTimeField(auto_now_add=True, db_index=True)
     def __str__(self):
         return subject
