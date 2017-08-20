@@ -57,7 +57,17 @@ def contact_success(request):
     return render(request, 'sr/contact-success.html')
 
 def browse_decks(request):
-    return render(request, 'sr/browse-decks.html')
+    if (request.user.is_authenticated()):
+        added = {di.deck for di in models.DeckInstance.objects.filter(user=request.user))
+    not_added = {d for d in models.Deck.objects.all() if d not in added}
+    return render(request, 'sr/browse-decks.html', {'added': added, 'not_added': not_added})
+#        return render(request, 'sr/decks.html', {'instance_list': instance_list, 'count_list': count_list})
+#    else:
+#        return HttpResponseRedirect(reverse('sr:login'))
+
+#def browse_decks(request):
+#
+#    return render(request, 'sr/browse-decks.html')
 
 def getting_started(request):
     return render(request, 'sr/getting-started.html')
