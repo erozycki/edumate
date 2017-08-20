@@ -13,5 +13,5 @@ urlpatterns = [
     url(r'^contact/$', views.contact, name='contact'),
     url(r'^contact-success/$', views.contact_success, name='contact-success'),
     url(r'^browse-decks/$', views.browse_decks, name='browse-decks'),
-    url(r'getting-started/$', views.getting_started, name='getting-started'),
+    url(r'^getting-started/$', views.getting_started, name='getting-started'),
 ]
