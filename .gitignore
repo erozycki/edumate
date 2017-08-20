@@ -8,7 +8,6 @@ __pycache__/
 
 # Distribution / packaging
 .Python
-env/
 build/
 develop-eggs/
 dist/
@@ -79,11 +78,10 @@ celerybeat-schedule
 # SageMath parsed files
 *.sage.py
 
-# dotenv
+# Environments
 .env
-
-# virtualenv
 .venv
+env/
 venv/
 ENV/
 
@@ -100,8 +98,6 @@ ENV/
 # mypy
 .mypy_cache/
 
-#######################
-
 ### Django ###
 *.log
 *.pot
@@ -111,7 +107,8 @@ local_settings.py
 db.sqlite3
 media
 
-# settings
-Project/secrets.py
+#settings
+secrets.py
 
 *.pem
+csr.pem
