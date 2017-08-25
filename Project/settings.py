@@ -24,7 +24,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # Create your own secret key in a separate file called secrets.py; make sure to add it to .gitignore
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
 ALLOWED_HOSTS = [
     u'ec2-34-213-172-53.us-west-2.compute.amazonaws.com',
@@ -140,7 +140,8 @@ STATIC_URL = '/Project/static/'
 
 LOGIN_REDIRECT_URL = '/'
 
+'''
 SECURE_SSL_REDIRECT = True
 SESSION_COOKIE_SECURE = True
 CSRF_COOKIE_SECURE = True
-
+'''
