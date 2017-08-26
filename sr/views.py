@@ -96,10 +96,15 @@ def deck_details(request, deck_name):
 
 from django.contrib.staticfiles.views import serve
 def ssl_validation(request):
+    with open('/opt/bitnami/apps/django/django_projects/Project/A74E04808631445013DE8BEC11187C75.txt', 'rb') as f:
+        response = HttpResponse(f, content_type="text/plain")
+        #response["Content-disposition"] = "attachment
+        return response
+#    return HttpResponseRedirect(reverse('sr:login'))
 #    return serve(request, '/opt/bitnami/apps/django/django_projects/Project/C06F6C31FEB8E0E0454C35722593BC00.txt', '/')
 #    return serve(request, 'C06F6C31FEB8E0E0454C35722593BC00.txt')
-    test_file = open('/opt/bitnami/apps/django/django_projects/Project/C06F6C31FEB8E0E0454C35722593BC00.txt', 'rb')
-    response = HttpResponse(content=test_file)
-    response['Content-Type'] = 'application/txt'
-    response['Content-Disposition'] = 'attachment; filename="C06F6C31FEB8E0E0454C35722593BC00.txt"', 
-    return response
+#    test_file = open('/opt/bitnami/apps/django/django_projects/Project/C06F6C31FEB8E0E0454C35722593BC00.txt', 'rb')
+#    response = HttpResponse(content=test_file)
+#    response['Content-Type'] = 'application/txt'
+#    response['Content-Disposition'] = 'attachment; filename="C06F6C31FEB8E0E0454C35722593BC00.txt"', 
+#    return response
