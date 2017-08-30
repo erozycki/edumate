@@ -58,10 +58,15 @@ def contact_success(request):
     return render(request, 'sr/contact-success.html')
 
 def browse_decks(request):
+    added = {}
     if (request.user.is_authenticated()):
         added = {di.deck for di in models.DeckInstance.objects.filter(user=request.user)}
-    not_added = {d for d in models.Deck.objects.all() if d not in added}
-    return render(request, 'sr/browse-decks.html', {'added': added, 'not_added': not_added})
+    notAdded = [d for d in models.Deck.objects.all() if d not in added]
+    added = list(added)
+    countsAdded = [len(models.Card.objects.filter(deck=d)) for d in added]
+    countsNotAdded = [len(models.Card.objects.filter(deck=d)) for d in notAdded]
+    return render(request, 'sr/browse-decks.html', {'added': added, 'notAdded': notAdded, 'countsAdded': countsAdded,
+                                                    'countsNotAdded': countsNotAdded})
 #        return render(request, 'sr/decks.html', {'instance_list': instance_list, 'count_list': count_list})
 #    else:
 #        return HttpResponseRedirect(reverse('sr:login'))
@@ -94,6 +99,7 @@ def deck_details(request, deck_name):
         raise Http404("No deck with name \"" + deck_name + "\" exists.")
     return render(request, 'sr/deck-details.html', {'deck': matches[0]})
 
+'''
 from django.contrib.staticfiles.views import serve
 def ssl_validation(request):
     with open('/opt/bitnami/apps/django/django_projects/Project/A74E04808631445013DE8BEC11187C75.txt', 'rb') as f:
@@ -108,3 +114,4 @@ def ssl_validation(request):
 #    response['Content-Type'] = 'application/txt'
 #    response['Content-Disposition'] = 'attachment; filename="C06F6C31FEB8E0E0454C35722593BC00.txt"', 
 #    return response
+'''

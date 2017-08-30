@@ -1,4 +1,5 @@
 {% extends 'sr/base.html' %}
+{% load index %}
 
 {% block content %}
 <div class="container">
@@ -7,24 +8,27 @@
         <thead>
             <tr>
                 <th>Deck name</th>
-                <!-- <th>Number of cards</th> -->
+                <th>Number of cards</th>
                 <th>Deck details</th>
                 <th>Subscribe to deck</th>
             </tr>
         </thead>
         <tbody>
-            {% for deck in not_added %}
+            {% for deck in notAdded %}
             <tr>
                 <td>{{ deck.name }}</td>
-                <!-- <td>{{ count_list.instance }}</td> -->
+                <td>{{ countsNotAdded|index:forloop.counter0 }}</td>
                 <td><a href="{% url 'sr:deck-details' deck_name=deck.name %}">Details</a></td>
                 <td><a href="{% url 'sr:add-deck' deck_name=deck.name %}">Add to library</a></td>
             </tr>
             {% endfor %}
+            {% if added and notAdded %}
+            <tr border-bottom: 1px solid black;></tr>
+            {% endif %}
             {% for deck in added %}
             <tr>
                 <td>{{ deck.name }}</td>
-                <!-- <td>{{ count_list.instance }}</td> -->
+                <td>{{ countsAdded|index:forloop.counter0 }}</td>
                 <td><a href="{% url 'sr:deck-details' deck_name=deck.name %}">Details</a></td>
                 <td>Already added</td>
             </tr>
