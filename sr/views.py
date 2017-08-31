@@ -95,7 +95,11 @@ def review(request, deck_name):
             di = models.DeckInstance.objects.get(user=request.user, deck=d)
         except ObjectDoesNotExist:
             raise Http404("Currently you do not have access to deck \"" + deck_name + "\".")
-        return HttpResponse("aa")
+        if request.method == 'POST':
+            pass
+            # update db
+        #card = di.next_review()
+        return render(request, 'sr/review.html', {'card': card})
     else:
         return HttpResponseRedirect(reverse('sr:login'))
 

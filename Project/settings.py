@@ -24,7 +24,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # Create your own secret key in a separate file called secrets.py; make sure to add it to .gitignore
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 ALLOWED_HOSTS = [
     u'ec2-34-213-172-53.us-west-2.compute.amazonaws.com',

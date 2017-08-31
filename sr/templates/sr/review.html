@@ -1,0 +1,27 @@
+{% extends 'sr/base.html' %}
+
+{% block content %}
+
+<div class="container">
+  <div id="front" style="font-size:48px;">
+  {{ card.front }}
+  </div>
+
+  <div id="reverse" style="display: none;">
+  <hr style="border:2px solid #000;">
+  {{ card.reverse }}
+  <form method="post">
+    {% csrf_token %}
+    <input type="submit" value="Wrong"></input>
+    <input type="submit" value="Right"></input>
+    <input type="submit" value="Trivial"></input>
+  </div
+</div>
+
+{% endblock %}
+
+{% block scripts %}
+<script>
+</script>
+{% load static %}
+{% endblock %}
