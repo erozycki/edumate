@@ -19,7 +19,6 @@ def index(request):
 def decks(request):
     if (request.user.is_authenticated()):
         instance_list = models.DeckInstance.objects.filter(user=request.user)
-        #count_list = {x: len(models.ScheduledReview.objects.filter(deck_instance=x).filter(when_due__gt=datetime.datetime.now())) for x in instance_list}
         count_list = [len(models.ScheduledReview.objects.filter(deck_instance=x).filter(when_due__lt=datetime.datetime.now())) for x in instance_list]
         return render(request, 'sr/decks.html', {'instance_list': instance_list, 'count_list': count_list})
     else:
@@ -69,13 +68,6 @@ def browse_decks(request):
     countsNotAdded = [len(models.Card.objects.filter(deck=d)) for d in notAdded]
     return render(request, 'sr/browse-decks.html', {'added': added, 'notAdded': notAdded, 'countsAdded': countsAdded,
                                                     'countsNotAdded': countsNotAdded})
-#        return render(request, 'sr/decks.html', {'instance_list': instance_list, 'count_list': count_list})
-#    else:
-#        return HttpResponseRedirect(reverse('sr:login'))
-
-#def browse_decks(request):
-#
-#    return render(request, 'sr/browse-decks.html')
 
 def add_deck(request, deck_name):
     decks = models.Deck.objects.filter(name=deck_name)
@@ -103,20 +95,3 @@ def deck_details(request, deck_name):
     if not matches:
         raise Http404("No deck with name \"" + deck_name + "\" exists.")
     return render(request, 'sr/deck-details.html', {'deck': matches[0]})
-
-'''
-from django.contrib.staticfiles.views import serve
-def ssl_validation(request):
-    with open('/opt/bitnami/apps/django/django_projects/Project/A74E04808631445013DE8BEC11187C75.txt', 'rb') as f:
-        response = HttpResponse(f, content_type="text/plain")
-        #response["Content-disposition"] = "attachment
-        return response
-#    return HttpResponseRedirect(reverse('sr:login'))
-#    return serve(request, '/opt/bitnami/apps/django/django_projects/Project/C06F6C31FEB8E0E0454C35722593BC00.txt', '/')
-#    return serve(request, 'C06F6C31FEB8E0E0454C35722593BC00.txt')
-#    test_file = open('/opt/bitnami/apps/django/django_projects/Project/C06F6C31FEB8E0E0454C35722593BC00.txt', 'rb')
-#    response = HttpResponse(content=test_file)
-#    response['Content-Type'] = 'application/txt'
-#    response['Content-Disposition'] = 'attachment; filename="C06F6C31FEB8E0E0454C35722593BC00.txt"', 
-#    return response
-'''
