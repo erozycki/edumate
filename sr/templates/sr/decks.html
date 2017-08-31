@@ -1,6 +1,6 @@
 <!-- COPIED OVER; NOT FIXED -->
 {% extends "sr/base.html" %}
-
+{% load index %}
 {% block content %} 
 
 {% if user.is_authenticated %}
@@ -20,7 +20,7 @@
             {% for instance in instance_list %}
             <tr>
                 <td>{{ instance.deck.name }}</td>
-                <td>{{ count_list.instance }}</td>
+                <td>{{ count_list|index:forloop.counter0 }}</td>
                 <td>{{ instance.reviews_done }}</td>
                 <td><a href="{% url 'sr:deck-details' deck_name=instance.deck.name %}">Details</a></td>
             </tr>

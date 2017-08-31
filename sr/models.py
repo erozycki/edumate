@@ -66,7 +66,7 @@ class ScheduledReview(models.Model):
     when_scheduled = models.DateTimeField(auto_now_add=True, db_index=True)
     when_due = models.DateTimeField(db_index=True)
     def __str__(self):
-        return "Card in " + self.deck_instance.deck + " due on " + self.when_due
+        return "Card in " + str(self.deck_instance.deck) + " due on " + str(self.when_due)
 
 class FinishedReview(models.Model):
     scheduled_review = models.ForeignKey(ScheduledReview)
@@ -82,8 +82,8 @@ class FinishedReview(models.Model):
     answer_long_form = models.TextField(blank=True, default='')
     when_reviewed = models.DateTimeField(auto_now_add=True, db_index=True)
     def __str__(self):
-        return ("Card in " + self.scheduled_review.deck_instance.deck + " reviewed on " + 
-                self.when_reviewed + ": " + self.score)
+        return ("Card in " + str(self.scheduled_review.deck_instance.deck) + " reviewed on " + 
+                str(self.when_reviewed) + ": " + self.score)
 
 # hack to be used until mail server is set up
 class ContactForm(models.Model):

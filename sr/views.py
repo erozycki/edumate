@@ -10,6 +10,7 @@ from forms import ContactForm
 from django.db import IntegrityError
 import datetime
 import models
+import random
 
 def index(request):
     return render(request, 'sr/index.html')
@@ -18,7 +19,8 @@ def index(request):
 def decks(request):
     if (request.user.is_authenticated()):
         instance_list = models.DeckInstance.objects.filter(user=request.user)
-        count_list = {x: len(models.ScheduledReview.objects.filter(deck_instance=x).filter(when_due__gt=datetime.datetime.now())) for x in instance_list}
+        #count_list = {x: len(models.ScheduledReview.objects.filter(deck_instance=x).filter(when_due__gt=datetime.datetime.now())) for x in instance_list}
+        count_list = [len(models.ScheduledReview.objects.filter(deck_instance=x).filter(when_due__lt=datetime.datetime.now())) for x in instance_list]
         return render(request, 'sr/decks.html', {'instance_list': instance_list, 'count_list': count_list})
     else:
         return HttpResponseRedirect(reverse('sr:login'))
@@ -84,6 +86,9 @@ def add_deck(request, deck_name):
         # if user attempts to add duplicate deck instance, update nothing
         try:
             di.save()
+            for c in models.Card.objects.filter(deck=di.deck):
+                sr = models.ScheduledReview(card=c, deck_instance=di, when_due=datetime.datetime.now())
+                sr.save()
         except IntegrityError:
             pass
         return HttpResponseRedirect(reverse('sr:decks'))
