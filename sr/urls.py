@@ -17,4 +17,5 @@ urlpatterns = [
     url(r'^getting-started/$', views.getting_started, name='getting-started'),
     url(r'^decks/details/(?P<deck_name>.*)/$', views.deck_details, name='deck-details'),
     url(r'^decks/add-decks/(?P<deck_name>.*)/$', views.add_deck, name='add-deck'),
+    url(r'^review/(?P<deck_name>.*)/$', views.review, name='review'),
 ]

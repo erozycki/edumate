@@ -8,7 +8,6 @@ from django.contrib.auth import login, authenticate
 from django.contrib.auth.forms import UserCreationForm
 from forms import ContactForm
 from django.db import IntegrityError
-from django.core.exceptions import ObjectDoesNotExist
 import datetime
 import models
 import random
@@ -89,15 +88,14 @@ def add_deck(request, deck_name):
         return HttpResponseRedirect(reverse('sr:login'))
 
 def review(request, deck_name):
-    if request.user.is_authenticated():
+    if request.user.is_authenticated:
         try:
             d = models.Deck.objects.get(name=deck_name)
             di = models.DeckInstance.objects.get(user=request.user, deck=d)
         except ObjectDoesNotExist:
-            raise Http404("Currently you do not have access to deck \"" + deck_name + "\".")
-        return HttpResponse("aa")
-    else:
-        return HttpResponseRedirect(reverse('sr:login'))
+            raise Http404("Currently you do not have access to a deck with name \"" + deck_name + "\".")
+        
+
 
 def getting_started(request):
     return render(request, 'sr/getting-started.html')
