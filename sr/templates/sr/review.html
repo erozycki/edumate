@@ -9,8 +9,8 @@
     {{ id }}
   </div>
 
-  <div id="reverse">
-  <!-- <div id="reverse" style="display: none;"> -->
+  <!-- <div id="reverse"> -->
+  <div id="reverse" style="display: none;">
     <hr style="border:2px solid #000;">
     {{ card.back }}
     {{ id }}
@@ -28,6 +28,9 @@
 
 {% block scripts %}
 <script>
+$(document).keypress(function() {
+$("#reverse").css("display", "inline");
+});
 </script>
 {% load static %}
 {% endblock %}

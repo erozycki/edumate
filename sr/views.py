@@ -21,8 +21,8 @@ def index(request):
 def decks(request):
     if (request.user.is_authenticated()):
         instance_list = sr.models.DeckInstance.objects.filter(user=request.user)
-        count_list = [len(sr.models.ScheduledReview.objects.filter(deck_instance=x).filter(when_due__lt=datetime.datetime.now())) for x in instance_list]
-        return render(request, 'sr/decks.html', {'instance_list': instance_list, 'count_list': count_list})
+        due_list = [len(sr.models.ScheduledReview.objects.filter(deck_instance=x).filter(done=False, when_due__lt=datetime.datetime.now())) for x in instance_list]
+        return render(request, 'sr/decks.html', {'instance_list': instance_list, 'due_list': due_list})
     else:
         return HttpResponseRedirect(reverse('sr:login'))
 
@@ -99,13 +99,21 @@ def review(request, deck_name):
         if request.method == 'POST':
             try:
                 rev = sr.models.ScheduledReview.objects.get(pk=int(request.POST['id']))
-                return HttpResponse(str(rev) + ' ' + str(rev.id))
+                fr = sr.models.FinishedReview(scheduled_review=rev, score=int(request.POST['submit']))
+                if fr.score not in [0, 1, 2]:
+                    raise ValueError
+                rev.done = True
+                newReview = sr.models.ScheduledReview(card=rev.card, deck_instance=rev.deck_instance,
+                                                      when_due=datetime.datetime.now() + datetime.timedelta(seconds=40))
+                di.reviews_done += 1
+                fr.save()
+                rev.save()
+                newReview.save()
+                di.save()
+                #return HttpResponse(str(rev) + ' ' + str(rev.id))
             except (ValueError, ObjectDoesNotExist):
                 raise HttpResponseBadRequest('Invalid form input.')
-            
-            # update db 
         rev = sr.models.ScheduledReview.objects.filter(deck_instance=di, done=False).earliest('when_due')
-        #card = sr.models.Card(front="Front test", back="Reverse test", deck=d)
         return render(request, 'sr/review.html', {'card': rev.card, 'id': rev.pk})
     else:
         return HttpResponseRedirect(reverse('sr:login'))
