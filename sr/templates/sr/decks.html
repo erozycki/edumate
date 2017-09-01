@@ -20,7 +20,11 @@
             {% for instance in instance_list %}
             <tr>
                 <td>{{ instance.deck.name }}</td>
-                <td>{{ due_list|index:forloop.counter0 }}</td>
+                {% if due_list|index:forloop.counter0 > 0 %}
+                <td><a href="{% url 'sr:review' deck_name=instance.deck.name %}">{{ due_list|index:forloop.counter0 }} - Review now</a></td>
+                {% else %}
+                <td>0</td>
+                {% endif %}
                 <td>{{ instance.reviews_done }}</td>
                 <td><a href="{% url 'sr:deck-details' deck_name=instance.deck.name %}">Details</a></td>
             </tr>
