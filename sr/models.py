@@ -65,8 +65,13 @@ class ScheduledReview(models.Model):
     deck_instance = models.ForeignKey(DeckInstance, db_index=True)
     when_scheduled = models.DateTimeField(auto_now_add=True, db_index=True)
     when_due = models.DateTimeField(db_index=True)
+    done = models.BooleanField(default=False)
     def __str__(self):
         return "Card in " + str(self.deck_instance.deck) + " due on " + str(self.when_due)
+    class Meta:
+        indexes = [
+            models.Index(fields=['deck_instance', 'done']),
+        ]
 
 class FinishedReview(models.Model):
     scheduled_review = models.ForeignKey(ScheduledReview)

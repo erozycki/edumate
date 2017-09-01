@@ -3,18 +3,24 @@
 {% block content %}
 
 <div class="container">
+  <br>
   <div id="front" style="font-size:48px;">
-  {{ card.front }}
+    {{ card.front }}
+    {{ id }}
   </div>
 
-  <div id="reverse" style="display: none;">
-  <hr style="border:2px solid #000;">
-  {{ card.reverse }}
-  <form method="post">
-    {% csrf_token %}
-    <input type="submit" value="Wrong"></input>
-    <input type="submit" value="Right"></input>
-    <input type="submit" value="Trivial"></input>
+  <div id="reverse">
+  <!-- <div id="reverse" style="display: none;"> -->
+    <hr style="border:2px solid #000;">
+    {{ card.back }}
+    {{ id }}
+    <form method="post">
+      {% csrf_token %}
+      <button type="submit" name="submit" value="0">Wrong</button>
+      <button type="submit" name="submit" value="1">Right</button>
+      <button type="submit" name="submit" value="2">Trivial</button>
+      <input type="hidden" name="id" value="{{ id }}">
+    </form>
   </div
 </div>
 
