@@ -104,7 +104,7 @@ def review(request, deck_name):
                     raise ValueError
                 rev.done = True
                 newReview = sr.models.ScheduledReview(card=rev.card, deck_instance=rev.deck_instance,
-                                                      when_due=datetime.datetime.now() + datetime.timedelta(seconds=40))
+                                                      when_due=datetime.datetime.now() + datetime.timedelta(days=1))
                 di.reviews_done += 1
                 fr.save()
                 rev.save()
@@ -114,6 +114,8 @@ def review(request, deck_name):
             except (ValueError, ObjectDoesNotExist):
                 raise HttpResponseBadRequest('Invalid form input.')
         rev = sr.models.ScheduledReview.objects.filter(deck_instance=di, done=False).earliest('when_due')
+        if rev.when_due > datetime.datetime.now(rev.when_due.tzinfo):
+            return render(request, 'sr/done-reviewing.html', {'deck_name': deck_name})
         return render(request, 'sr/review.html', {'card': rev.card, 'id': rev.pk})
     else:
         return HttpResponseRedirect(reverse('sr:login'))
