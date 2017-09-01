@@ -2,13 +2,15 @@
 
 {% block content %}
 
+{% load static %}
+
 <div class="container">
   <br>
   <div id="front" style="font-size:48px;">
     {{ card.front }}
     {{ id }}
   </div>
-
+  <img src="{% static "sr/JPEG_example_JPG_RIP_050.jpg" %}">
   <!-- <div id="reverse"> -->
   <div id="reverse" style="display: none;">
     <hr style="border:2px solid #000;">
