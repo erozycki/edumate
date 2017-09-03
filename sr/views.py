@@ -11,11 +11,15 @@ from django.db import IntegrityError
 from django.core.exceptions import ObjectDoesNotExist
 import datetime
 from django.db.models import Min, Count
+from django.template import Context, Template
 import sr.models
 import random
 
 def index(request):
     return render(request, 'sr/index.html')
+
+def test(request):
+    return render(request, 'sr/test.html')
 
 ### COPIED OVER
 def decks(request):
@@ -103,8 +107,11 @@ def review(request, deck_name):
                 if fr.score not in [0, 1, 2]:
                     raise ValueError
                 rev.done = True
-                newReview = sr.models.ScheduledReview(card=rev.card, deck_instance=rev.deck_instance,
-                                                      when_due=datetime.datetime.now() + datetime.timedelta(days=1))
+                if di.scheduler:
+                    newReview = di.scheduler.schedule(di, rev)
+                else:
+                    newReview = sr.models.ScheduledReview(card=rev.card, deck_instance=rev.deck_instance,
+                                                          when_due=datetime.datetime.now() + datetime.timedelta(days=1))
                 di.reviews_done += 1
                 fr.save()
                 rev.save()
@@ -116,7 +123,9 @@ def review(request, deck_name):
         rev = sr.models.ScheduledReview.objects.filter(deck_instance=di, done=False).earliest('when_due')
         if rev.when_due > datetime.datetime.now(rev.when_due.tzinfo):
             return render(request, 'sr/done-reviewing.html', {'deck_name': deck_name})
-        return render(request, 'sr/review.html', {'card': rev.card, 'id': rev.pk})
+        card = {'front': Template(rev.card.front).render(Context({})),
+                'back': Template(rev.card.back).render(Context({})),}
+        return render(request, 'sr/review.html', {'card': card, 'id': rev.pk})
     else:
         return HttpResponseRedirect(reverse('sr:login'))
 

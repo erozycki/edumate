@@ -1,0 +1,61 @@
+{% extends 'sr/base.html' %}
+{% load static %}
+
+{% block head_additions %}
+<!-- <link rel="stylesheet" href="{% static "sr/jquery-jvectormap-2.0.3.css" %}" type="text/css" media="screen"/>
+  <script src="{% static "sr/jquery.js" %}"></script>
+  <script src="{% static "sr/jquery-jvectormap-2.0.3.min.js" %}"></script>
+  <script src="{% static "sr/jquery-jvectormap-africa-mill.js" %}"></script>
+  <script src="{% static "sr/jquery-jvectormap-europe-mill.js" %}"></script>
+-->
+{% endblock %}
+
+{% block content %}
+<link rel="stylesheet" href="{% static "sr/jquery-jvectormap-2.0.3.css" %}" type="text/css" media="screen"/>
+  <script src="{% static "sr/jquery.js" %}"></script>
+  <script src="{% static "sr/jquery-jvectormap-2.0.3.min.js" %}"></script>
+  <script src="{% static "sr/jquery-jvectormap-africa-mill.js" %}"></script>
+  <script src="{% static "sr/jquery-jvectormap-europe-mill.js" %}"></script>
+
+<div class="container">
+<p style="font-size: 36px; text-align: center;">Identify the highlighted country:</p>
+
+<div id="map" style="width: 600px; height:500px; margin: auto;"></div>
+  <script>
+    $(function(){
+      $('#map').vectorMap({map: 'europe_mill',
+      regionStyle: {
+  initial: {
+    fill: 'grey',
+    "fill-opacity": 1,
+    stroke: 'none',
+    "stroke-width": 0,
+    "stroke-opacity": 1
+  },
+  hover: {
+    "fill-opacity": 0.8,
+    cursor: 'pointer'
+  },
+  selected: {
+    fill: 'red'
+  },
+  selectedHover: {
+  }
+},
+      backgroundColor: 'white',
+      zoomButtons: true,
+      selectedRegions: 'FR',
+     onRegionTipShow: function(e, label, code){
+       e.preventDefault();
+}
+         
+
+      });
+    });
+  </script>
+</div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+{% endblock %}
