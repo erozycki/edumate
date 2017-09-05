@@ -26,7 +26,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = [
+ALLOWED_HOSTS = ['ec2-34-213-172-53.us-west-2.compute.amazonaws.com',
     u'ec2-34-213-172-53.us-west-2.compute.amazonaws.com',
     u'34.213.172.53',
     u'www.edumate.me',
