@@ -1,12 +1,17 @@
-{% extends "sr/base.html" %}
+	{% extends "sr/base.html" %}
 
 {% block content %}
 <div class="container">
-    <h1>First steps</h1>
+    <h2>First steps</h2>
     <p>Try reading the <a href="{% url 'sr:why-edumate' %}">overview</a> to get a basic understanding of what Edumate does, or jump right in by
         <a href="{% url 'sr:register' %}">creating an account!</a></p>
-    <p>Once you have an account, add a deck and review any cards that are due. Each card consists of a prompt and an answer. The prompt is presented first - try to answer it as best as you can, and then press any key to reveal the answer.
-       Finally, indicate your performance; press "Wrong" if you got the item wrong, "Right" if you got it right, and "Trivial" if the item was so easy
+    <h2>How to use Edumate</h2>
+    <p>Once you have an account, subscribe to one or more decks on the <a href="{% url 'sr:browse-decks' %}">browse decks page</a>. Decks are composed of
+       flashcards, which are scheduled for review by Edumate. You can view your decks, see what is due, and initiate review sessions on the
+       <a href="{% url 'sr:decks' %}">my decks page</a>.
+    <p>Each card consists of a prompt and an answer. The prompt is presented first - try to answer it as best as you can, and then press any key
+       to reveal the answer.
+       Afterward, indicate your performance: press "Wrong" if you got the item wrong, "Right" if you got it right, and "Trivial" if the item was so easy
        that you don't think you'll need to review it very often.</p>
     <p>Under construction...</p>
 </div>
